@@ -34,7 +34,7 @@ pipeline {
                     npm test
                 '''
             }
-        }
+        }        
 
         stage ('E2E') {
             agent {
@@ -49,6 +49,21 @@ pipeline {
                     node_modules/.bin/serve -s build &
                     sleep 10
                     npx playwright test --reporter=html
+                '''
+            }
+        }
+
+        stage('Deploy') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh '''
+                    npm install netlify-cli -g
+                    netlify --version
                 '''
             }
         }
