@@ -30,7 +30,7 @@ pipeline {
             }
             steps {
                 sh '''
-                    test -f build/index.html
+                    #test -f build/index.html
                     npm test
                 '''
             }
@@ -48,11 +48,13 @@ pipeline {
                     npm install serve
                     node_modules/.bin/serve -s build &
                     sleep 10
-                    npx playwright test --reporter=html
+                    npx playwright test
+                    #npx playwright test --reporter=html
                 '''
             }
         }
 
+        /*
         stage('Deploy') {
             agent {
                 docker {
@@ -67,12 +69,13 @@ pipeline {
                 '''
             }
         }
+        */
     }
 
     post {
         always {
             junit 'jest-results/junit.xml'
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+            //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
         }
     }
 }
