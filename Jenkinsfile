@@ -75,10 +75,11 @@ pipeline {
             steps {
                 sh '''
                     npm install netlify-cli
-                    .nde_modules/.bin/netlify --version
+                    node_modules/.bin/netlify --version
                     echo "Deploying to production with site id $NETLIFY_SITE_ID
-                    .nde_modules/.bin/netlify status
-                    .nde_modules/.bin/netlify deploy --dir=build --prod
+                    node_modules/.bin/netlify status
+                    node_modules/.bin/netlify deploy --dir=build --prod
+                    echo "Deployed to production!
                 '''
             }
         }
